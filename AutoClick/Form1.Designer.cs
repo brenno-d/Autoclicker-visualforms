@@ -61,7 +61,7 @@
             this.minuteInterval.Name = "minuteInterval";
             this.minuteInterval.Size = new System.Drawing.Size(44, 20);
             this.minuteInterval.TabIndex = 2;
-            this.minuteInterval.Text = "1";
+            this.minuteInterval.Text = "0";
             this.minuteInterval.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.minuteInterval.TextChanged += new System.EventHandler(this.minuteInterval_TextChanged);
             // 
@@ -71,7 +71,7 @@
             this.secondInterval.Name = "secondInterval";
             this.secondInterval.Size = new System.Drawing.Size(44, 20);
             this.secondInterval.TabIndex = 3;
-            this.secondInterval.Text = "1";
+            this.secondInterval.Text = "0";
             this.secondInterval.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.secondInterval.TextChanged += new System.EventHandler(this.secondInterval_TextChanged_1);
             // 
@@ -81,7 +81,7 @@
             this.msInterval.Name = "msInterval";
             this.msInterval.Size = new System.Drawing.Size(61, 20);
             this.msInterval.TabIndex = 4;
-            this.msInterval.Text = "1";
+            this.msInterval.Text = "100";
             this.msInterval.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.msInterval.TextChanged += new System.EventHandler(this.msInterval_TextChanged);
             // 
@@ -122,7 +122,6 @@
             this.repeatUntil.Name = "repeatUntil";
             this.repeatUntil.Size = new System.Drawing.Size(60, 17);
             this.repeatUntil.TabIndex = 8;
-            this.repeatUntil.TabStop = true;
             this.repeatUntil.Text = "Repeat";
             this.repeatUntil.UseVisualStyleBackColor = true;
             this.repeatUntil.CheckedChanged += new System.EventHandler(this.repeatUntil_CheckedChanged);
@@ -130,6 +129,7 @@
             // repeatUntilStopped
             // 
             this.repeatUntilStopped.AutoSize = true;
+            this.repeatUntilStopped.Checked = true;
             this.repeatUntilStopped.Location = new System.Drawing.Point(436, 77);
             this.repeatUntilStopped.Name = "repeatUntilStopped";
             this.repeatUntilStopped.Size = new System.Drawing.Size(123, 17);
@@ -147,6 +147,7 @@
             this.repeatTimes.TabIndex = 10;
             this.repeatTimes.Text = "1";
             this.repeatTimes.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.repeatTimes.TextChanged += new System.EventHandler(this.repeatTimes_TextChanged);
             // 
             // label5
             // 
@@ -210,7 +211,7 @@
             this.startHotkey.Name = "startHotkey";
             this.startHotkey.Size = new System.Drawing.Size(75, 23);
             this.startHotkey.TabIndex = 23;
-            this.startHotkey.Text = "button3";
+            this.startHotkey.Text = "F1";
             this.startHotkey.UseVisualStyleBackColor = true;
             this.startHotkey.Click += new System.EventHandler(this.startHotkey_Click);
             // 
@@ -220,7 +221,7 @@
             this.stopHotkey.Name = "stopHotkey";
             this.stopHotkey.Size = new System.Drawing.Size(75, 23);
             this.stopHotkey.TabIndex = 22;
-            this.stopHotkey.Text = "button1";
+            this.stopHotkey.Text = "F2";
             this.stopHotkey.UseVisualStyleBackColor = true;
             this.stopHotkey.Click += new System.EventHandler(this.stopHotkey_Click);
             // 
@@ -321,6 +322,8 @@
             this.Controls.Add(this.groupBox3);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
