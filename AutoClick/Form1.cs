@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using System.Drawing.Text;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
 namespace AutoClick
@@ -21,6 +22,8 @@ namespace AutoClick
 
         const uint MOUSEEVENTF_LEFTDOWN = 0x0002;
         const uint MOUSEEVENTF_LEFTUP = 0x0004;
+        const uint MOUSEEVENTF_RIGHTDOWN = 0x0008;
+        const uint MOUSEEVENTF_RIGHTUP = 0x0010;
 
         public Form1()
         {
@@ -29,11 +32,16 @@ namespace AutoClick
             this.MaximizeBox = false;
             this.KeyPreview = true;
             this.TopMost = true;
-
+            mouseButtonOption.Items.AddRange(new string[] { "Left", "Right" });
+            mouseButtonOption.SelectedIndex = 0;
+            msInterval.Minimum = 0;
+            secondInterval.Minimum = 0;
+            minuteInterval.Minimum = 0;
         }
         public bool isClicking = false;
         public string startkey = "F1";
         public string stopkey = "F2";
+
 
         private void label2_Click(object sender, EventArgs e)
         {
@@ -53,21 +61,6 @@ namespace AutoClick
         {
             githubLink.LinkArea = new LinkArea(0, githubLink.Text.Length);
             System.Diagnostics.Process.Start("https://github.com/brenno-d/Autoclicker-visualforms");
-        }
-
-        private void msInterval_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void minuteInterval_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void secondInterval_TextChanged_1(object sender, EventArgs e)
-        {
-
         }
 
         private void repeatUntil_CheckedChanged(object sender, EventArgs e)
@@ -91,8 +84,7 @@ namespace AutoClick
 
         private void startHotkey_Click(object sender, EventArgs e)
         {
-            //startHotkey.Text = "Press any key...";
-            //string otkey = this.KeyDown.ToString();
+
         }
 
         private void stopHotkey_Click(object sender, EventArgs e)
@@ -100,22 +92,11 @@ namespace AutoClick
 
         }
 
-        private void mouseButtonOption_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
-        }
 
         private void repeatTimes_TextChanged(object sender, EventArgs e)
         {
 
-        }
-        private void click(int interval)
-        {
-            uint X = (uint)Cursor.Position.X;
-            uint Y = (uint)Cursor.Position.Y;
-            mouse_event(MOUSEEVENTF_LEFTDOWN, X, Y, 0, 0);
-            mouse_event(MOUSEEVENTF_LEFTUP, X, Y, 0, 0);
-            System.Threading.Thread.Sleep(interval);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -124,9 +105,11 @@ namespace AutoClick
         }
         private void startClicking()
         {
-            int min = int.Parse(minuteInterval.Text) * 60_000;
-            int sec = int.Parse(secondInterval.Text) * 1_000;
-            int ms = int.Parse(msInterval.Text);
+            int min = (int)minuteInterval.Value * 60_000;
+            int sec = (int)secondInterval.Value * 1_000;
+            int ms = (int)msInterval.Value;
+            var mouseButton = mouseButtonOption.SelectedItem.ToString() == "Left" ? MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP : MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP;
+
             int totalInterval = min + sec + ms;
             isClicking = true;
 
@@ -139,8 +122,8 @@ namespace AutoClick
                     {
                         uint X = (uint)Cursor.Position.X;
                         uint Y = (uint)Cursor.Position.Y;
-                        mouse_event(MOUSEEVENTF_LEFTDOWN, X, Y, 0, 0);
-                        mouse_event(MOUSEEVENTF_LEFTUP, X, Y, 0, 0);
+                        mouse_event(mouseButton, X, Y, 0, 0);
+                        mouse_event(mouseButton, X, Y, 0, 0);
                         System.Threading.Thread.Sleep(totalInterval);
 
 
@@ -160,19 +143,22 @@ namespace AutoClick
                 }
             });
         }
-
-
-
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyData == Keys.F1)
+            string pressedKey = e.KeyData.ToString();
+            if (pressedKey == startkey)
             {
                 startBtn.PerformClick();
             }
-            else if (e.KeyData == Keys.F2)
+            else if (pressedKey == stopkey)
             {
                 isClicking = false;
             }
+        }
+
+        private void repeatUntilStopped_CheckedChanged_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

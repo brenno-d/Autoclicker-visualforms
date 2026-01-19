@@ -28,9 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.minuteInterval = new System.Windows.Forms.TextBox();
-            this.secondInterval = new System.Windows.Forms.TextBox();
-            this.msInterval = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -51,39 +48,16 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.startBtn = new System.Windows.Forms.Button();
             this.stop_btn = new System.Windows.Forms.Button();
+            this.msInterval = new System.Windows.Forms.NumericUpDown();
+            this.secondInterval = new System.Windows.Forms.NumericUpDown();
+            this.minuteInterval = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.msInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.secondInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minuteInterval)).BeginInit();
             this.SuspendLayout();
-            // 
-            // minuteInterval
-            // 
-            this.minuteInterval.Location = new System.Drawing.Point(69, 60);
-            this.minuteInterval.Name = "minuteInterval";
-            this.minuteInterval.Size = new System.Drawing.Size(44, 20);
-            this.minuteInterval.TabIndex = 2;
-            this.minuteInterval.Text = "0";
-            this.minuteInterval.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.minuteInterval.TextChanged += new System.EventHandler(this.minuteInterval_TextChanged);
-            // 
-            // secondInterval
-            // 
-            this.secondInterval.Location = new System.Drawing.Point(170, 60);
-            this.secondInterval.Name = "secondInterval";
-            this.secondInterval.Size = new System.Drawing.Size(44, 20);
-            this.secondInterval.TabIndex = 3;
-            this.secondInterval.Text = "0";
-            this.secondInterval.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.secondInterval.TextChanged += new System.EventHandler(this.secondInterval_TextChanged_1);
-            // 
-            // msInterval
-            // 
-            this.msInterval.Location = new System.Drawing.Point(264, 60);
-            this.msInterval.Name = "msInterval";
-            this.msInterval.Size = new System.Drawing.Size(61, 20);
-            this.msInterval.TabIndex = 4;
-            this.msInterval.Text = "100";
-            this.msInterval.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.msInterval.TextChanged += new System.EventHandler(this.msInterval_TextChanged);
             // 
             // label2
             // 
@@ -99,7 +73,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label3.Location = new System.Drawing.Point(170, 44);
+            this.label3.Location = new System.Drawing.Point(137, 32);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(49, 13);
             this.label3.TabIndex = 6;
@@ -137,7 +111,7 @@
             this.repeatUntilStopped.TabStop = true;
             this.repeatUntilStopped.Text = "Repeat until stopped";
             this.repeatUntilStopped.UseVisualStyleBackColor = true;
-            this.repeatUntilStopped.CheckedChanged += new System.EventHandler(this.repeatUntilStopped_CheckedChanged);
+            this.repeatUntilStopped.CheckedChanged += new System.EventHandler(this.repeatUntilStopped_CheckedChanged_1);
             // 
             // repeatTimes
             // 
@@ -182,6 +156,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.minuteInterval);
+            this.groupBox1.Controls.Add(this.secondInterval);
+            this.groupBox1.Controls.Add(this.msInterval);
+            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Location = new System.Drawing.Point(28, 13);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(328, 100);
@@ -259,14 +237,10 @@
             // mouseButtonOption
             // 
             this.mouseButtonOption.FormattingEnabled = true;
-            this.mouseButtonOption.Items.AddRange(new object[] {
-            "Left",
-            "Right"});
             this.mouseButtonOption.Location = new System.Drawing.Point(115, 19);
             this.mouseButtonOption.Name = "mouseButtonOption";
             this.mouseButtonOption.Size = new System.Drawing.Size(121, 21);
             this.mouseButtonOption.TabIndex = 19;
-            this.mouseButtonOption.SelectedIndexChanged += new System.EventHandler(this.mouseButtonOption_SelectedIndexChanged);
             // 
             // groupBox3
             // 
@@ -297,6 +271,27 @@
             this.stop_btn.UseVisualStyleBackColor = true;
             this.stop_btn.Click += new System.EventHandler(this.stopBtn_Click);
             // 
+            // msInterval
+            // 
+            this.msInterval.Location = new System.Drawing.Point(236, 48);
+            this.msInterval.Name = "msInterval";
+            this.msInterval.Size = new System.Drawing.Size(51, 20);
+            this.msInterval.TabIndex = 21;
+            // 
+            // secondInterval
+            // 
+            this.secondInterval.Location = new System.Drawing.Point(140, 48);
+            this.secondInterval.Name = "secondInterval";
+            this.secondInterval.Size = new System.Drawing.Size(51, 20);
+            this.secondInterval.TabIndex = 22;
+            // 
+            // minuteInterval
+            // 
+            this.minuteInterval.Location = new System.Drawing.Point(32, 48);
+            this.minuteInterval.Name = "minuteInterval";
+            this.minuteInterval.Size = new System.Drawing.Size(52, 20);
+            this.minuteInterval.TabIndex = 23;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -313,11 +308,7 @@
             this.Controls.Add(this.repeatUntilStopped);
             this.Controls.Add(this.repeatUntil);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.msInterval);
-            this.Controls.Add(this.secondInterval);
-            this.Controls.Add(this.minuteInterval);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox3);
             this.Name = "Form1";
@@ -325,17 +316,19 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.msInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.secondInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minuteInterval)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.TextBox minuteInterval;
-        private System.Windows.Forms.TextBox secondInterval;
-        private System.Windows.Forms.TextBox msInterval;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
@@ -356,6 +349,9 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button startBtn;
         private System.Windows.Forms.Button stop_btn;
+        private System.Windows.Forms.NumericUpDown msInterval;
+        private System.Windows.Forms.NumericUpDown minuteInterval;
+        private System.Windows.Forms.NumericUpDown secondInterval;
     }
 }
 
