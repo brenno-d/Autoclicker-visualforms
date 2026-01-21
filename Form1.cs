@@ -36,9 +36,9 @@ namespace AutoClick
         // end of imports
 
         bool isClicking = false;
-        uint togglekey = (uint)Keys.F1;
+        uint togglekey;
         bool waitingForHotkey = false;
-
+        
         public Form1()
         {
             InitializeComponent();
@@ -50,12 +50,19 @@ namespace AutoClick
             msInterval.Minimum = 0;
             secondInterval.Minimum = 0;
             minuteInterval.Minimum = 0;
-            
-            
+           
+
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            
+            msInterval.Value = Properties.Settings.Default.msInterval;
+            secondInterval.Value = Properties.Settings.Default.secondInterval;
+            minuteInterval.Value = Properties.Settings.Default.minuteInterval;
+            togglekey = (uint)Properties.Settings.Default.toggleKey;
             RegisterHotKey(this.Handle, 1, MOD_NONE, togglekey);
+            RegisterHotKey(this.Handle, 1, MOD_NONE, togglekey);
+            startHotkey.Text = ((Keys)togglekey).ToString();
         }
         protected override void WndProc(ref Message m)
         {
@@ -101,6 +108,7 @@ namespace AutoClick
 
         private void startHotkey_Click(object sender, EventArgs e)
         {
+            
             UnregisterHotKey(this.Handle, 1);
             startHotkey.Text = "Press any key...";
             this.KeyPreview = true;
@@ -148,6 +156,11 @@ namespace AutoClick
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
+            Properties.Settings.Default.msInterval = (int)msInterval.Value;
+            Properties.Settings.Default.secondInterval = (int)secondInterval.Value;
+            Properties.Settings.Default.minuteInterval = (int)minuteInterval.Value;
+            Properties.Settings.Default.toggleKey = togglekey;
+            Properties.Settings.Default.Save();
             UnregisterHotKey(this.Handle, 1);
             base.OnFormClosing(e);
         }

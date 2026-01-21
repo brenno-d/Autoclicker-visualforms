@@ -210,7 +210,6 @@
             this.startHotkey.Name = "startHotkey";
             this.startHotkey.Size = new System.Drawing.Size(100, 25);
             this.startHotkey.TabIndex = 23;
-            this.startHotkey.Text = "F1";
             this.startHotkey.UseVisualStyleBackColor = true;
             this.startHotkey.Click += new System.EventHandler(this.startHotkey_Click);
             // 
