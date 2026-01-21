@@ -32,11 +32,12 @@ namespace AutoClick
         public static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-        // end of imports
 
+        // end of imports
 
         bool isClicking = false;
         uint togglekey = (uint)Keys.F1;
+        bool waitingForHotkey = false;
 
         public Form1()
         {
@@ -49,10 +50,13 @@ namespace AutoClick
             msInterval.Minimum = 0;
             secondInterval.Minimum = 0;
             minuteInterval.Minimum = 0;
-            RegisterHotKey(this.Handle, 1, MOD_NONE, togglekey);
+            
             
         }
-
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            RegisterHotKey(this.Handle, 1, MOD_NONE, togglekey);
+        }
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);
@@ -72,7 +76,6 @@ namespace AutoClick
                         isClicking = false;
                     }
                 }
-                
             }
         }
 
@@ -98,12 +101,12 @@ namespace AutoClick
 
         private void startHotkey_Click(object sender, EventArgs e)
         {
-
+            UnregisterHotKey(this.Handle, 1);
+            startHotkey.Text = "Press any key...";
+            this.KeyPreview = true;
+            waitingForHotkey = true;
         }
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
+      
         private void startClicking()
         {
             int min = (int)minuteInterval.Value * 60_000;
@@ -147,6 +150,23 @@ namespace AutoClick
         {
             UnregisterHotKey(this.Handle, 1);
             base.OnFormClosing(e);
+        }
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (!waitingForHotkey)
+                return;
+
+            UnregisterHotKey(this.Handle, 1);
+            togglekey = (uint)e.KeyCode;
+            RegisterHotKey(this.Handle, 1, MOD_NONE, togglekey);
+            startHotkey.Text = $"{e.KeyCode}";
+
+            waitingForHotkey = false;
+            e.SuppressKeyPress = true;
+        }
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            
         }
     }
 }

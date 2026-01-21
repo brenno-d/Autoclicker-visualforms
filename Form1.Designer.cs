@@ -205,8 +205,10 @@
             // startHotkey
             // 
             this.startHotkey.Location = new System.Drawing.Point(126, 53);
+            this.startHotkey.MaximumSize = new System.Drawing.Size(120, 25);
+            this.startHotkey.MinimumSize = new System.Drawing.Size(100, 25);
             this.startHotkey.Name = "startHotkey";
-            this.startHotkey.Size = new System.Drawing.Size(75, 23);
+            this.startHotkey.Size = new System.Drawing.Size(100, 25);
             this.startHotkey.TabIndex = 23;
             this.startHotkey.Text = "F1";
             this.startHotkey.UseVisualStyleBackColor = true;
@@ -291,6 +293,7 @@
             this.Name = "Form1";
             this.Text = "AutoClicker";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
