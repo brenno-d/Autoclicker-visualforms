@@ -66,7 +66,6 @@ namespace AutoClick
             minuteInterval.Value = Properties.Settings.Default.minuteInterval;
             togglekey = (uint)Properties.Settings.Default.toggleKey;
             RegisterHotKey(this.Handle, 1, MOD_NONE, togglekey);
-            RegisterHotKey(this.Handle, 1, MOD_NONE, togglekey);
             startHotkey.Text = ((Keys)togglekey).ToString();
         }
         protected override void WndProc(ref Message m)
@@ -76,7 +75,7 @@ namespace AutoClick
             if (m.Msg == WM_HOTKEY)
             {
                 int id = m.WParam.ToInt32();
-                // id 1 is hotkey to start/stop clicking
+                // id 1 is hotkey to start/stop clicking defined in RegisterHotKey
                 if (id == 1)
                 {
                     if (!isClicking)
@@ -205,8 +204,22 @@ namespace AutoClick
                 FinalizeHotkey(e.KeyCode);
                 return;
             }
-                FinalizeHotkey(e.KeyCode);
-            e.SuppressKeyPress = true;
+        }
+        
+        string FormatPartialHotkey()
+        {
+            // if control, shift .. add to text with + at the end, if no modifiers, return empty string
+            List<string> parts = new List<string>();
+
+            if ((currentModifiers & MOD_CONTROL) != 0)
+                parts.Add("Ctrl");
+            if ((currentModifiers & MOD_SHIFT) != 0)
+                parts.Add("Shift");
+            if ((currentModifiers & MOD_ALT) != 0)
+                parts.Add("Alt");
+            if(currentModifiers == 0)
+                return "";
+            return string.Join(" + ", parts) + " + ";
         }
         void FinalizeHotkey(Keys key)
         {
@@ -220,23 +233,10 @@ namespace AutoClick
             waitingForHotkey = false;
             currentModifiers = 0;
         }
-        string FormatPartialHotkey()
-        {
-            List<string> parts = new List<string>();
-
-            if ((currentModifiers & MOD_CONTROL) != 0)
-                parts.Add("Ctrl");
-            if ((currentModifiers & MOD_SHIFT) != 0)
-                parts.Add("Shift");
-            if ((currentModifiers & MOD_ALT) != 0)
-                parts.Add("Alt");
-            if(currentModifiers == 0)
-                return "";
-            return string.Join(" + ", parts) + " + ";
-        }
 
         string FormatFinalHotkey(Keys key)
         {
+            // if there are modifiers, add them with + in between, if there are no modifiers, return just the key
             return FormatPartialHotkey() + key.ToString();
         }
 
